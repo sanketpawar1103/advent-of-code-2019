@@ -30,9 +30,8 @@ const chnageValues = (arr) => {
 };
 
 const sprint = (cmds) => {
-  let arr = [...cmds.split(",").map((str) => +str)];
+  let arr = [...chnageValues(cmds.split(",").map((str) => +str))];
   let [location, index] = [0, 0];
-  arr = [...chnageValues(arr)];
 
   while (index < arr.length && arr[index] !== 99) {
     location = arr[index + 3];
