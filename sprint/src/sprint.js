@@ -1,15 +1,6 @@
-const add = (operand1, operand2, location, array) => {
-  const arr = [...array];
-  arr[location] = operand1 + operand2;
+const add = (operand1, operand2) => operand1 + operand2;
 
-  return arr;
-};
-const mul = (operand1, operand2, location, array) => {
-  const arr = [...array];
-  arr[location] = operand1 * operand2;
-
-  return arr;
-};
+const mul = (operand1, operand2) => operand1 * operand2;
 
 const executor = {
   1: add,
@@ -30,13 +21,13 @@ const chnageValues = (arr) => {
 };
 
 const sprint = (cmds) => {
-  let arr = [...chnageValues(cmds.split(",").map((str) => +str))];
+  const arr = [...chnageValues(cmds.split(",").map((str) => +str))];
   let [location, index] = [0, 0];
 
   while (index < arr.length && arr[index] !== 99) {
     location = arr[index + 3];
     const [operand1, operand2] = operands(arr, index);
-    arr = [...executor[arr[index]](operand1, operand2, location, arr)];
+    arr[location] = executor[arr[index]](operand1, operand2);
     index += 4;
   }
 
