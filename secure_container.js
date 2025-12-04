@@ -1,22 +1,13 @@
-//Range : 264360-746325
-// However, they do remember a few key facts about the password:
+const doesOccureTwice = (number) => {
+  let i = 0;
 
-// It is a six-digit number.
-// The value is within the range given in your puzzle input.
-// Two adjacent digits are the same (like 22 in 122345).
-// Going from left to right, the digits never decrease;
-// they only ever increase or stay the same (like 111123 or 135679).
-// Other than the range rule, the following are true:
-
-// 111111 meets these criteria (double 11, never decreases).
-// 223450 does not meet these criteria (decreasing pair of digits 50).
-// 123789 does not meet these criteria (no double).
-
-const hasRepeatingChar = (number) => {
-  for (let index = 0; index < 5; index++) {
-    if (number[index] === number[index + 1]) {
+  while (i < 5) {
+    const lastIndex = number.lastIndexOf(number[i]);
+    const occurances = lastIndex - number.indexOf(number[i]) + 1;
+    if (occurances === 2) {
       return true;
     }
+    i = lastIndex + 1;
   }
 
   return false;
@@ -29,7 +20,7 @@ const iterateInRange = (start, end) => {
   let counter = 0;
 
   for (let i = start; i <= end; i++) {
-    if (hasRepeatingChar(i.toString()) && isInAscendingOrder(i.toString())) {
+    if (doesOccureTwice(i.toString()) && isInAscendingOrder(i.toString())) {
       counter++;
     }
   }
