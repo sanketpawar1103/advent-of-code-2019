@@ -10,23 +10,18 @@ const wire2 = {
   path: [],
 };
 
-const move = (wire, axis, steps) => {
-  const crrtPos = [wire.x, wire.y];
-  wire[axis] += steps;
-  const newPos = [wire.x, wire.y];
-
-  wire.path.push([crrtPos, newPos]);
-  // for (let step = 0; step < steps; step++) {
-  //   wire[axis] += value;
-  //   wire.path.push([wire.x, wire.y]);
-  // }
+const move = (wire, axis, val, steps) => {
+  for (let step = 0; step < steps; step++) {
+    wire[axis] += val;
+    wire.path.push([wire.x, wire.y]);
+  }
 };
 
 const commands = {
-  U: (wire, steps) => move(wire, "y", +steps),
-  D: (wire, steps) => move(wire, "y", -steps),
-  R: (wire, steps) => move(wire, "x", +steps),
-  L: (wire, steps) => move(wire, "x", -steps),
+  U: (wire, steps) => move(wire, "y", +1, steps),
+  D: (wire, steps) => move(wire, "y", -1, steps),
+  R: (wire, steps) => move(wire, "x", +1, steps),
+  L: (wire, steps) => move(wire, "x", -1, steps),
 };
 
 const start = (path, wire) => {
@@ -42,7 +37,7 @@ const matchIntersections = (path1, path2) => {
   // for (let index = 0; index < path1.length; index++) {
   //   for (let index = 0; index < array.length; index++) {
   //     const element = array[index];
-      
+
   //   }
   // }
   const intersections = [];
@@ -63,22 +58,39 @@ const findDistance = (intersectionPoints) =>
     Math.abs(0 - point[0]) + Math.abs(0 - point[1])
   );
 
+const loopOverSteps = (point) => {
+  let ct1 = 0;
+  let ct2 = 0;
+
+  while (point[0] !== wire1.path[ct1][0] || point[1] !== wire1.path[ct1][1]) {
+    ct1 += 1;
+  }
+
+  while (point[0] !== wire2.path[ct2][0] || point[1] !== wire2.path[ct2][1]) {
+    ct2 += 1;
+  }
+
+  return ct1 + ct2 + 2;
+};
+
+const countSteps = (intersectionPoints) =>
+  intersectionPoints.map((each) => loopOverSteps(each));
+
 const crossedWires = (path1, path2) => {
   start(path1, wire1);
   start(path2, wire2);
 
-  console.log(wire1.path);
-  console.log(wire2.path);
-
   const intersectionPoints = matchIntersections(wire1.path, wire2.path);
-  // console.log(Math.min(...findDistance(intersectionPoints)));
+  console.log(intersectionPoints);
+  console.log(Math.min(...countSteps(intersectionPoints)));
+  // const steps = countSteps(intersectionPoints);
 };
 
 const splitPaths = (path, delimiter) => path.split(delimiter);
 
 const main = () => {
   const paths = splitPaths(
-    "R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83",
+    Deno.readTextFileSync("day_03_crosed_wire_data.txt"),
     "\n",
   );
 
@@ -86,6 +98,3 @@ const main = () => {
 };
 
 main();
-
-const part2 = () => {
-};
