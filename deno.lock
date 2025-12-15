@@ -4,6 +4,7 @@
     "jsr:@std/assert@*": "1.0.16",
     "jsr:@std/assert@^1.0.16": "1.0.16",
     "jsr:@std/collections@*": "1.1.3",
+    "jsr:@std/collections@^1.1.3": "1.1.3",
     "jsr:@std/internal@^1.0.12": "1.0.12"
   },
   "jsr": {
@@ -19,6 +20,12 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     }
+  },
+  "redirects": {
+    "https://deno.land/std/fmt/colors.ts": "https://deno.land/std@0.224.0/fmt/colors.ts"
+  },
+  "remote": {
+    "https://deno.land/std@0.224.0/fmt/colors.ts": "508563c0659dd7198ba4bbf87e97f654af3c34eb56ba790260f252ad8012e1c5"
   },
   "workspace": {
     "dependencies": [
