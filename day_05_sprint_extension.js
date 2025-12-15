@@ -14,7 +14,7 @@ const mul = (operands, arr) => {
   return arr;
 };
 
-const readInput = (operands, arr) => {
+const readInput = (_operands, arr) => {
   arr[arr[index + 1]] = +prompt("Enter input :");
   index += 2;
 
@@ -128,4 +128,4 @@ const sprint = (cmds) => {
 
 const parseCmds = (cmds) => cmds.split(",").map((str) => +str);
 
-sprint(parseCmds(Deno.readTextFileSync("./sprint_extension_data.txt")));
+sprint(parseCmds(Deno.readTextFileSync("./day_05_sprint_extension_data.txt")));
