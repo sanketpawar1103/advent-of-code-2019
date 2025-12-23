@@ -1,30 +1,31 @@
 let counter = 0;
 
-const toLeft = (dialPointer, move) => ((dialPointer - move) % 100) + 100 % 100;
+const toRight = (dialPointer, move) => {
+  counter += Math.floor((dialPointer + move) / 100);
 
-const toRight = (dialPointer, move) => (dialPointer + move) % 100;
-
-const directions = {
-  "L": toLeft,
-  "R": toRight,
+  return (dialPointer + move) % 100;
 };
+
+const toLeft = (dialPointer, move) => {
+  counter += Math.floor((dialPointer - 1) / 100) -
+    Math.floor((dialPointer - move - 1) / 100);
+
+  return ((dialPointer - move) % 100 + 100) % 100;
+};
+
+const directions = { L: toLeft, R: toRight };
 
 const main = (ip) => {
   let dialPointer = 50;
-  let counter = 0;
 
-  for (let i = 0; i < ip.length; i++) {
-    dialPointer = directions[ip[i][0]](dialPointer, parseInt(ip[i].slice(1)));
-    if (dialPointer === 0) {
-      counter++;
-    }
+  for (const instruction of ip) {
+    const [dir, move] = [instruction[0], parseInt(instruction.slice(1))];
+    dialPointer = directions[dir](dialPointer, move);
   }
 
   console.log(counter);
 };
 
-const parseInput = (inputStr) => inputStr.split("\n");
+const parseInput = (str) => str.split("\n");
 
-main(
-  parseInput(Deno.readTextFileSync("01_secret_entrance.txt")),
-);
+main(parseInput(Deno.readTextFileSync("01_secret_entrance.txt")));
